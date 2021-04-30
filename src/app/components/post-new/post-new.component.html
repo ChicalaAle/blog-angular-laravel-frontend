@@ -1,0 +1,55 @@
+<h1 class="gradient mb-4">{{page_title}}</h1>
+
+<div class="alert alert-success mt-4" *ngIf="status == 'SUCCESS'">
+    Entrada subida correctamente.
+</div>
+
+
+<div class="alert alert-danger mt-4" *ngIf="status == 'ERROR'">
+   No se pudo crear la entrada.
+</div>
+
+<form #newPostForm="ngForm" (ngSubmit)="onSubmit(newPostForm)">
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label for="title">Título de la entrada</label>
+            <input type="text" class="form-control" id="title" name="title" #title="ngModel" [(ngModel)]="post.title" required>
+            <small *ngIf="!title.valid && title.touched" class="invalid-feedback d-block">El titulo no es válido</small>
+        </div>
+        
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label for="inputEmail4">Contenido</label>
+            <textarea [froalaEditor]="froala_options" name="content" #content="ngModel" [(ngModel)]="post.content" required></textarea>
+            <small *ngIf="!content.valid && content.touched" class="invalid-feedback d-block">El contenido no es válido</small>
+          </div>
+    </div>
+
+    <div class="form-group">
+        <!--<div class="form-group col-md-12">-->
+            <label for="category_id">Categoría</label><br>
+            <select name="category_id" #category="ngModel" [(ngModel)]="post.category_id" class="form-control" >                
+                <option selected value="1">Selecciona una categoría</option>
+                <option *ngFor="let category of categories" value="{{category.id}}">
+                    {{category.name}}
+                </option>
+            </select>
+       <!--</div>-->
+        
+    </div>
+
+    <div class="form-row">
+        <div class="col-md-10">    
+            <angular-file-uploader [config]="afuConfig" (ApiResponse)="postImage($event)"></angular-file-uploader>
+        </div>
+        <div class="col-md-2 text-right">
+            <button class="btn btn-primary ">Subir entrada</button>   
+        </div> 
+    </div>
+
+    
+
+    
+</form>

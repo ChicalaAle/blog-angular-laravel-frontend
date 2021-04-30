@@ -1,0 +1,80 @@
+<div class="col-md-8 m-auto">
+    <h1 class="text-center gradient mb-4">{{page_title}}</h1>
+    <hr>
+
+    <div class="alert alert-success mt-4" *ngIf="status == 'SUCCESS'">
+        Se ha actualizado tu usuario con éxito :)
+    </div>
+
+    <div class="alert alert-danger mt-4" *ngIf="status == 'ERROR'">
+        No se ha podido actualizar el usuario :(
+    </div>
+    <!--FORMULARIO DE AJUSTES-->
+    <form #userEditForm="ngForm" (ngSubmit)="onSubmit(userEditForm)">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">Nombres</label>
+                    <input type="text" class="form-control" id="name" name="name" #name="ngModel" [(ngModel)]="user.name" required pattern="[a-z A-Z]+" placeholder="Por favor, introduce tu nombre...">
+                    <!--MENSAJE DE ERROR EN LA VALIDACIÓN DEL CAMPO-->
+                    <small *ngIf="!name.valid && name.touched" class="invalid-feedback d-block">El nombre no es válido</small>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="surname">Apellidos</label>
+                    <input type="text" class="form-control" name="surname" id="surname" #surname="ngModel" [(ngModel)]="user.surname" required pattern="[a-z A-Z]+" placeholder="Por favor, introduce tu apellido...">
+                    <!--MENSAJE DE ERROR EN LA VALIDACIÓN DEL CAMPO-->
+                    <small *ngIf="!surname.valid && surname.touched" class="invalid-feedback d-block">Los apellidos no son válidos.</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" class="form-control" name="email" id="email" #email="ngModel" [(ngModel)]="user.email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="Por favor, introduce tu apellido...">
+            <!--MENSAJE DE ERROR EN LA VALIDACIÓN DEL CAMPO-->
+            <small *ngIf="!email.valid && email.touched" class="invalid-feedback d-block">El email no es válido.</small>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Biografía</label>
+            <textarea [froalaEditor]="froala_options" type="text" rows="8" class="form-control" name="description" id="description" #description="ngModel" [(ngModel)]="user.description" placeholder="Introduce una breve descripción sobre tí..."></textarea>
+            <!--MENSAJE DE ERROR EN LA VALIDACIÓN DEL CAMPO-->
+            <small *ngIf="!description.valid && description.touched" class="invalid-feedback d-block">El description no es válido.</small>
+        </div>
+
+
+        <div class="form-group">
+            <label for="exampleFormControlFile1">Imagen de perfil</label>
+            <div *ngIf="identity && identity.image">
+                <img src="{{ url + 'user/avatar/' +identity.image}}" class="avatar_edit">
+            </div>
+            
+            <angular-file-uploader
+                [config]="afuConfig"
+                (ApiResponse)="avatarUpload($event)"
+                >
+            </angular-file-uploader>
+        </div>
+
+        <button class="btn btn-success w-100">Actualizar</button>        
+        
+    </form>
+</div>
+
+
+
+<!--<div class="aviso p-2">
+    <img src="https://insupam.com/wp-content/uploads/2020/02/iphone-x-cut-out-no-background.png" height="100px" alt="">
+</div>-->
+
+<div class="burbujas">
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
+</div>
+
+

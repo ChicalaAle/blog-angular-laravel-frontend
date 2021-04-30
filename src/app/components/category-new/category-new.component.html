@@ -1,0 +1,26 @@
+<h1 class="gradient mb-4">Crear nueva categoría</h1>
+
+<div class="alert alert-success" *ngIf="status && status == 'SUCCESS' ">
+    Se ha creado la categoría <span class="text-danger">{{newCategoryName}}</span>
+</div>
+
+<div class="alert alert-danger" *ngIf="status && status == 'ERROR' ">
+    No se pudo crear la categoría.
+</div>
+
+<form #categoryForm="ngForm" (ngSubmit)="onSubmit(categoryForm)">
+    
+    <div class="form-row align-items-center">
+        
+        <div class="col-6">
+            <input type="text" name="categoryName" #categoryName="ngModel" [(ngModel)]="category.name"  class="form-control mb-2" id="s" required pattern="[a-z A-Z]+" placeholder="Introduce el nombre de la categoría...">
+            
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-success mb-2">Crear nueva categoría</button>
+        </div>
+    </div>
+
+    <span class="text-danger" *ngIf="!categoryName.valid && categoryName.touched">Nombre de categoría inválido</span>
+    
+  </form>
